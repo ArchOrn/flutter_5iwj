@@ -1,67 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_5iwj/user.dart';
+import 'package:flutter_5iwj/user_item.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final count = 20;
+    final users = List.generate(100, (index) {
+      return User(
+        firstName: 'First name $index',
+        lastName: 'Last name $index',
+        address: '$index, rue du Faubourg St Antoine',
+      );
+    });
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: ListView.separated(
-          itemCount: count,
+        child: ListView.builder(
+          itemCount: users.length,
           itemBuilder: (context, index) {
-            return Center(
-              child: Stack(
-                alignment: AlignmentDirectional.center,
-                children: [
-                  const RedSquare(),
-                  Text(
-                    index.toString(),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-          separatorBuilder: (context, index) {
-            return const SizedBox(height: 30);
+            return UserItem(user: users[index]);
           },
         ),
-      ),
-    );
-  }
-}
-
-class RedSquare extends StatelessWidget {
-  const RedSquare({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 80,
-      height: 80,
-      color: Colors.red,
-    );
-  }
-}
-
-class RedCircle extends StatelessWidget {
-  const RedCircle({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 30,
-      height: 30,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: Colors.red,
       ),
     );
   }
