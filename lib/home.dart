@@ -1,82 +1,147 @@
 import 'package:flutter/material.dart';
 
-class Home extends StatefulWidget {
-  final String title;
-
-  const Home({super.key, required this.title});
-
-  @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  final List<Widget> _screens = [
-    const Bookmarks(),
-    const Calendar(),
-  ];
-
-  int _currentIndex = 0;
+class Home extends StatelessWidget {
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        leading: const Icon(Icons.flight),
-        title: Text(
-          widget.title,
-        ),
-      ),
       backgroundColor: Colors.white,
-      body: _screens[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (index) {
-          print('index: $index');
-          setState(() => _currentIndex = index);
-        },
-        currentIndex: _currentIndex,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Bookmarks',
+      body: Column(
+        children: [
+          Expanded(
+            child: Column(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    color: Colors.pink,
+                  ),
+                ),
+                Expanded(
+                  child: Stack(
+                    children: [
+                      Container(
+                        color: Colors.orange,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Wrap(
+                          spacing: 6,
+                          runSpacing: 6,
+                          children: [
+                            RedCircle(),
+                            RedCircle(),
+                            RedCircle(),
+                            RedCircle(),
+                            RedCircle(),
+                            RedCircle(),
+                            RedCircle(),
+                            RedCircle(),
+                            RedCircle(),
+                            RedCircle(),
+                            RedCircle(),
+                            RedCircle(),
+                            RedCircle(),
+                            RedCircle(),
+                            RedCircle(),
+                            RedCircle(),
+                            RedCircle(),
+                            RedCircle(),
+                            RedCircle(),
+                            RedCircle(),
+                            RedCircle(),
+                            RedCircle(),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_month),
-            label: 'Calendar',
+          Expanded(
+            child: Stack(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Stack(
+                        children: [
+                          Container(
+                            color: Colors.amber,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Row(
+                              children: [
+                                RedCircle(),
+                                SizedBox(width: 6),
+                                RedCircle(),
+                                Spacer(),
+                                RedCircle(),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ],
+                ),
+                const Center(
+                  child: RedSquare(),
+                ),
+                // const Positioned(
+                //   top: 0,
+                //   bottom: 0,
+                //   left: 0,
+                //   right: 0,
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       RedSquare(),
+                //     ],
+                //   ),
+                // ),
+              ],
+            ),
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.add),
-      ),
     );
   }
 }
 
-class Bookmarks extends StatelessWidget {
-  const Bookmarks({super.key});
+class RedSquare extends StatelessWidget {
+  const RedSquare({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.amber,
-      child: const Center(
-        child: Text('Bookmarks screen'),
-      ),
+      width: 80,
+      height: 80,
+      color: Colors.red,
     );
   }
 }
 
-class Calendar extends StatelessWidget {
-  const Calendar({super.key});
+class RedCircle extends StatelessWidget {
+  const RedCircle({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.pink,
-      child: const Center(
-        child: Text('Calendar screen'),
+      width: 30,
+      height: 30,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: Colors.red,
       ),
     );
   }
