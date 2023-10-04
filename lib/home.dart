@@ -5,114 +5,34 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final count = 20;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Expanded(
-            child: Column(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    color: Colors.pink,
-                  ),
-                ),
-                Expanded(
-                  child: Stack(
-                    children: [
-                      Container(
-                        color: Colors.orange,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Wrap(
-                          spacing: 6,
-                          runSpacing: 6,
-                          children: [
-                            RedCircle(),
-                            RedCircle(),
-                            RedCircle(),
-                            RedCircle(),
-                            RedCircle(),
-                            RedCircle(),
-                            RedCircle(),
-                            RedCircle(),
-                            RedCircle(),
-                            RedCircle(),
-                            RedCircle(),
-                            RedCircle(),
-                            RedCircle(),
-                            RedCircle(),
-                            RedCircle(),
-                            RedCircle(),
-                            RedCircle(),
-                            RedCircle(),
-                            RedCircle(),
-                            RedCircle(),
-                            RedCircle(),
-                            RedCircle(),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Stack(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Stack(
-                        children: [
-                          Container(
-                            color: Colors.amber,
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Row(
-                              children: [
-                                RedCircle(),
-                                SizedBox(width: 6),
-                                RedCircle(),
-                                Spacer(),
-                                RedCircle(),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+      body: SafeArea(
+        child: ListView.separated(
+          itemCount: count,
+          itemBuilder: (context, index) {
+            return Center(
+              child: Stack(
+                alignment: AlignmentDirectional.center,
+                children: [
+                  const RedSquare(),
+                  Text(
+                    index.toString(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
                     ),
-                    Expanded(
-                      child: Container(
-                        color: Colors.blue,
-                      ),
-                    ),
-                  ],
-                ),
-                const Center(
-                  child: RedSquare(),
-                ),
-                // const Positioned(
-                //   top: 0,
-                //   bottom: 0,
-                //   left: 0,
-                //   right: 0,
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     children: [
-                //       RedSquare(),
-                //     ],
-                //   ),
-                // ),
-              ],
-            ),
-          ),
-        ],
+                  ),
+                ],
+              ),
+            );
+          },
+          separatorBuilder: (context, index) {
+            return const SizedBox(height: 30);
+          },
+        ),
       ),
     );
   }
