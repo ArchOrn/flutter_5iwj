@@ -1,1 +1,0 @@
-class ParsingError extends Error {}
