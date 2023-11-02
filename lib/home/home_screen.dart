@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_5iwj/computation/computation_screen.dart';
-import 'package:flutter_5iwj/users/users_screen.dart';
+import 'package:flutter_5iwj/home/map_view.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -9,26 +8,20 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  UsersScreen.navigateTo(context);
-                },
-                child: const Text('Click me!'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  ComputationScreen.navigateTo(context, number: 4);
-                },
-                child: const Text('Compute 4'),
-              ),
-            ],
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            label: 'Map',
+            icon: Icon(Icons.map),
           ),
-        ),
+          BottomNavigationBarItem(
+            label: 'Profile',
+            icon: Icon(Icons.person),
+          ),
+        ],
+      ),
+      body: const SafeArea(
+        child: MapView(),
       ),
     );
   }
