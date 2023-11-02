@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_5iwj/computation/computation_screen.dart';
 import 'package:flutter_5iwj/home/home_screen.dart';
 import 'package:flutter_5iwj/users/users_screen.dart';
 
@@ -25,6 +26,17 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (_) => const HomeScreen(),
         UsersScreen.routeName: (_) => const UsersScreen(),
+      },
+      onGenerateRoute: (RouteSettings settings) {
+        switch(settings.name) {
+          case ComputationScreen.routeName:
+            return MaterialPageRoute(builder: (_) {
+              final number = settings.arguments as int;
+              return ComputationScreen(number: number);
+            });
+        }
+
+        return null;
       },
     );
   }
