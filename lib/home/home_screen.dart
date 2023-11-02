@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_5iwj/core/errors/network_error.dart';
 import 'package:flutter_5iwj/core/services/api_services.dart';
-import 'package:flutter_5iwj/home/post_item.dart';
+import 'package:flutter_5iwj/home/user_item.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: FutureBuilder(
-            future: ApiServices.getPosts(),
+            future: ApiServices.getUsers(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
@@ -31,32 +31,19 @@ class HomeScreen extends StatelessWidget {
 
               if (!snapshot.hasData) {
                 return const Center(
-                  child: Text('No posts available'),
+                  child: Text('No users available'),
                 );
               }
 
-              final posts = snapshot.data!;
-              return ListView.separated(
+              final users = snapshot.data!;
+              return ListView.builder(
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(10),
-                    child: PostItem(post: posts[index]),
+                    child: UserItem(user: users[index]),
                   );
                 },
-                separatorBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      const SizedBox(height: 5),
-                      Container(
-                        width: double.infinity,
-                        height: 1,
-                        color: Colors.blue,
-                      ),
-                      const SizedBox(height: 5),
-                    ],
-                  );
-                },
-                itemCount: posts.length,
+                itemCount: users.length,
               );
             }),
       ),
