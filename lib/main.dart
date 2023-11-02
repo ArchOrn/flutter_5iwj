@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_5iwj/home.dart';
+import 'package:flutter_5iwj/home/home_screen.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
 }
 
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const Home(),
+      home: const HomeScreen(),
     );
   }
 }
