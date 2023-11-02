@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter_5iwj/core/errors/network_error.dart';
 import 'package:flutter_5iwj/core/errors/parsing_error.dart';
 import 'package:flutter_5iwj/core/errors/unknown_error.dart';
+import 'package:flutter_5iwj/core/models/photo.dart';
 import 'package:flutter_5iwj/core/models/post.dart';
 import 'package:flutter_5iwj/core/models/user.dart';
 import 'package:http/http.dart' as http;
@@ -46,16 +47,42 @@ class ApiServices {
       }
 
       final jsonBody = json.decode(response.body);
-      final posts = (jsonBody as List<dynamic>?)?.map((json) {
+      final users = (jsonBody as List<dynamic>?)?.map((json) {
         return User.fromJson(json);
       }).toList();
-      if (posts == null) {
+      if (users == null) {
         throw ParsingError();
       }
 
       await Future.delayed(const Duration(milliseconds: 500));
 
-      return posts;
+      return users;
+    } on SocketException {
+      throw NetworkError();
+    } catch (error) {
+      log('error: $error', name: 'ApiServices');
+      throw UnknownError(message: error.toString());
+    }
+  }
+
+  static Future<List<Photo>> getPhotos() async {
+    try {
+      final response = await http.get(Uri.parse('$_baseUrl/photos'));
+      if (response.statusCode != 200) {
+        throw Error();
+      }
+
+      final jsonBody = json.decode(response.body);
+      final photos = (jsonBody as List<dynamic>?)?.map((json) {
+        return Photo.fromJson(json);
+      }).toList();
+      if (photos == null) {
+        throw ParsingError();
+      }
+
+      await Future.delayed(const Duration(milliseconds: 500));
+
+      return photos;
     } on SocketException {
       throw NetworkError();
     } catch (error) {

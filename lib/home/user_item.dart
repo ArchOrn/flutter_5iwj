@@ -11,7 +11,7 @@ class UserItem extends StatelessWidget {
     return ListTile(
       title: Text(user.fullName),
       subtitle: Text(user.address),
-      leading: Icon(
+      leading: const Icon(
         Icons.person,
       ),
     );
