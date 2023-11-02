@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
 class UsersScreen extends StatelessWidget {
+  static const routeName = 'users';
+
   static navigateTo(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) {
-        return const UsersScreen();
-      }),
-    );
+    Navigator.of(context).pushNamed(routeName);
   }
 
   const UsersScreen({super.key});

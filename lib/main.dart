@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_5iwj/home/home_screen.dart';
+import 'package:flutter_5iwj/users/users_screen.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -21,7 +22,10 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const HomeScreen(),
+      routes: {
+        '/': (_) => const HomeScreen(),
+        UsersScreen.routeName: (_) => const UsersScreen(),
+      },
     );
   }
 }
