@@ -7,23 +7,51 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: BlocBuilder<ProductsBloc, ProductsState>(
-          builder: (context, state) {
-            if (state is ProductsLoading) {
-              const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
+    return BlocProvider(
+      create: (context) => ProductsBloc()..add(ProductsDataLoaded()),
+      child: Builder(builder: (context) {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          body: SafeArea(
+            child: BlocBuilder<ProductsBloc, ProductsState>(
+              builder: (context, state) {
+                if (state is ProductsLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
 
-            // TODO
+                if (state is ProductsLoadSuccess) {
+                  return ListView.builder(
+                    itemBuilder: (context, index) {
+                      final product = state.products[index];
+                      return ListTile(
+                        title: Text(product.title),
+                        subtitle: Text(product.description),
+                      );
+                    },
+                    itemCount: state.products.length,
+                  );
+                }
 
-            return Container();
-          },
-        ),
-      ),
+                if (state is ProductsLoadError) {
+                  return Container(
+                    color: Colors.red,
+                    child: Center(
+                      child: Text(
+                        state.message,
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  );
+                }
+
+                return const SizedBox();
+              },
+            ),
+          ),
+        );
+      }),
     );
   }
 }

@@ -28,9 +28,9 @@ class ApiServices {
   Future<List<Product>> getProducts() async {
     try {
       final response = await _client.get('/products');
-      return response.data['products']?.map((e) {
+      return (response.data['products'] as List<dynamic>?)?.map((e) {
             return Product.fromJson(e);
-          }) ??
+          }).toList() ??
           [];
     } on DioException catch (exception) {
       log('Error while retrieving products', error: exception);

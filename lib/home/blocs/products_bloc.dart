@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_5iwj/core/exceptions/api_exception.dart';
 import 'package:flutter_5iwj/core/models/product.dart';
 import 'package:flutter_5iwj/core/services/api_services.dart';
@@ -17,6 +19,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
       } on ApiException catch (exception) {
         emit(ProductsLoadError(message: exception.message));
       } catch (exception) {
+        log('Error while retrieving products', error: exception);
         emit(ProductsLoadError(message: 'Une erreur inconnue est survenue'));
       }
     });

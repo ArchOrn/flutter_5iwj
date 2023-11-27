@@ -16,7 +16,7 @@ class Product {
       id: json['id'],
       title: json['title'],
       description: json['description'],
-      price: json['price'],
+      price: double.parse(json['price'].toString()),
     );
   }
 }
