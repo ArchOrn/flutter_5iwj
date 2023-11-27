@@ -39,4 +39,16 @@ class ApiServices {
       );
     }
   }
+
+  Future<Product?> getProduct({required int id}) async {
+    try {
+      final response = await _client.get('/products/$id');
+      return Product.fromJson(response.data);
+    } on DioException catch (exception) {
+      log('Error while retrieving product $id', error: exception);
+      throw ApiException(
+        message: exception.message ?? 'Error while retrieving product $id',
+      );
+    }
+  }
 }
