@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_5iwj/home/map_view.dart';
+import 'package:flutter_5iwj/home/blocs/products_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -8,20 +9,20 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            label: 'Map',
-            icon: Icon(Icons.map),
-          ),
-          BottomNavigationBarItem(
-            label: 'Profile',
-            icon: Icon(Icons.person),
-          ),
-        ],
-      ),
-      body: const SafeArea(
-        child: MapView(),
+      body: SafeArea(
+        child: BlocBuilder<ProductsBloc, ProductsState>(
+          builder: (context, state) {
+            if (state is ProductsLoading) {
+              const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            // TODO
+
+            return Container();
+          },
+        ),
       ),
     );
   }
