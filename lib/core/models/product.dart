@@ -19,7 +19,17 @@ class Product {
       title: json['title'],
       description: json['description'],
       price: double.parse(json['price'].toString()),
-      imageUrl: (json['images'] as List<dynamic>?)?.first,
+      imageUrl: json['imageUrl'] ?? (json['images'] as List<dynamic>?)?.first,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'price': price,
+      'imageUrl': imageUrl,
+    };
   }
 }

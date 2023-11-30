@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_5iwj/cart/blocs/cart_bloc.dart';
 import 'package:flutter_5iwj/home/blocs/product_item_bloc.dart';
+import 'package:flutter_5iwj/shared/cart_floating_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductScreen extends StatelessWidget {
@@ -16,8 +18,7 @@ class ProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          ProductItemBloc()..add(ProductItemDataLoaded(id: id)),
+      create: (context) => ProductItemBloc()..add(ProductItemDataLoaded(id: id)),
       child: Builder(
         builder: (context) {
           return Scaffold(
@@ -29,8 +30,7 @@ class ProductScreen extends StatelessWidget {
                     final product = state.product!;
                     return Column(
                       children: [
-                        if (product.imageUrl != null)
-                          Image.network(product.imageUrl!),
+                        if (product.imageUrl != null) Image.network(product.imageUrl!),
                         const SizedBox(height: 10),
                         Padding(
                           padding: const EdgeInsets.all(10),
@@ -49,6 +49,37 @@ class ProductScreen extends StatelessWidget {
                                   fontSize: 14,
                                 ),
                               ),
+                              const SizedBox(height: 10),
+                              BlocConsumer<CartBloc, CartState>(
+                                listener: (context, state) {
+                                  if (state.status == CartStatus.added) {
+                                    ScaffoldMessenger.of(context)
+                                      ..clearSnackBars()
+                                      ..showSnackBar(const SnackBar(
+                                        content: Text('Item has been successfully added'),
+                                      ));
+                                  }
+                                },
+                                builder: (context, state) {
+                                  return ElevatedButton(
+                                    onPressed: () => context.read<CartBloc>().add(
+                                          CartItemAdded(
+                                            product: product,
+                                            quantity: 1,
+                                          ),
+                                        ),
+                                    child: state.status == CartStatus.loading
+                                        ? const Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              CircularProgressIndicator(),
+                                            ],
+                                          )
+                                        : const Text('Add item to cart'),
+                                  );
+                                },
+                              )
                             ],
                           ),
                         ),
@@ -78,6 +109,7 @@ class ProductScreen extends StatelessWidget {
                 },
               ),
             ),
+            floatingActionButton: const CartFloatingButton(),
           );
         },
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_5iwj/home/blocs/products_bloc.dart';
 import 'package:flutter_5iwj/home/product_screen.dart';
+import 'package:flutter_5iwj/shared/cart_floating_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -56,6 +57,7 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
             ),
+            floatingActionButton: const CartFloatingButton(),
           );
         },
       ),
